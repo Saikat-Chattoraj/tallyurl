@@ -9,6 +9,6 @@ async function initDB() {
 	const db = await mongoose.connect(MONGODB_CONNECTION_URI, {useNewUrlParser: true,useUnifiedTopology: true});
 	connection.isConnected = db.connections[0].readyState;
 	console.log("connect to MongoDB Database")
-}
+}  
 
 export default initDB;

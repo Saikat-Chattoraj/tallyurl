@@ -10,7 +10,7 @@ const LinkSchema = new mongoose.Schema({
     longUrl: {
         type: String,
         required: true,
-        maxlength: [300, 'Add url more than 300 characters']
+        maxlength: [500, 'Add url more than 500 characters']
     },
 		userId: {
         type: String,
