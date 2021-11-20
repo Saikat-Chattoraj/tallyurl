@@ -1,16 +1,15 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import { Layout } from '../components/Layout'
+import Navbar from '../components/Navbar'
+import ShortenUrl from '../components/ShortenUrl'
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-laptopview h-screen">
-      <div className="backdrop-filter backdrop-blur-sm w-full h-full">
-        HIHIHIJIHIHJIIJIJIJIJIJIJIJ
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      </div>
+    <Layout>
+    <div className="my-80">
+    <ShortenUrl/>
     </div>
+    </Layout>
   )
 }
