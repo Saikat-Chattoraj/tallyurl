@@ -31,7 +31,7 @@ const Navbar = () => {
               </button>
             )}
           </div>
-          <Link href="/">
+          {/* <Link href="/">
             <a className="text-white font-bold hover:bg-blue-700 px-2 py-2 rounded-md shadow-md ">HOME</a>
           </Link>
           <Link href="/">
@@ -39,7 +39,7 @@ const Navbar = () => {
           </Link>
           <Link href="/">
             <a className="text-white font-bold hover:bg-blue-700 px-2 py-2 rounded-md shadow-md">LOGIN</a>
-          </Link>
+          </Link> */}
         </div>
       </div>
     </div>

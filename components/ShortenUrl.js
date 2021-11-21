@@ -1,12 +1,31 @@
 import Link from "next/link";
 import { useState, useEffect } from 'react'
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 
-export default function ShortenUrl({ btnText }) {
-  useEffect(() => (setSurl(window.location.href.replace('?', ""))), [])
-	const [longUrl, setLongUrl] = useState("");
-	const [shortUrl, setShortUrl] = useState("");
+
+function makeid(length) {
+  var result           = '';
+  var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var charactersLength = characters.length;
+  for ( var i = 0; i < length; i++ ) {
+    result += characters.charAt(Math.floor(Math.random() * 
+charactersLength));
+ }
+ return result;
+}
+
+
+const ShortenUrl = ({btnText}) => {
+  useEffect(() => (setSurl(window.location.href.replace('?',"" ))), [])
+  // useEffect(() => (window.onload = ransh(), []))
+  // if shortUrl == ""{
+	const ranurl = makeid(5)
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [longUrl, setLongUrl] = useState("");
+	const [shortUrl, setShortUrl] = useState(ranurl);  
 	const [userHash, setUserHash] = useState("123456");
 	const [surl, setSurl] = useState();
+  const [copy, setCopy] = useState("false")
 	const handleLongUrl = (e) => {
 		setLongUrl(e.target.value)
 	}
@@ -14,8 +33,7 @@ export default function ShortenUrl({ btnText }) {
 		setShortUrl(e.target.value)
     e.preventDefault();
 	}
-
-	const urlPattern="(http|https)://([\w+?\.\w+])+([a-zA-Z0-9\~\!\@\#\$\%\^\&\*\(\)_\-\=\+\\\/\?\.\:\;\'\,]*)?"
+	const urlPattern="((https|http)://)(www.)?[a-zA-Z0-9@:%._\\+~#?&//=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%._\\+~#?&//=]*)"
 
 	const handleSubmit = async () => {
 		const requestOptions = {
@@ -29,53 +47,40 @@ export default function ShortenUrl({ btnText }) {
 		console.log(response.success)
 	}
   return (
-    <div className="flex py-6 bg-gray-800 ">
-      <div className="flex w-2/3 m-auto place-items-center">
-        <div className="flex flex-col m-auto w-full ">
-          <form className="flex justify-around" onSubmit={handleSubmit}>
+    <div className="w-2/3 place-items-center m-auto">
+      <form className="" onSubmit={handleSubmit}>
+        <div className="flex">
             <input
-              className="h-full w-2/3 px-2 py-5 rounded-lg text-left "
+              className="h-full w-2/3 px-2 py-5 rounded-lg text-left mr-4 outline-blacksolid mt-11 "
               type="text"
               placeholder="Shorten your URL"
               onChange={handleLongUrl} pattern={urlPattern} required
             />
             <input
-              className="h-full w-2/3 px-2 py-5 rounded-lg text-left "
+              className="h-full w-2/3 px-2 py-5 rounded-lg text-left outline-blacksolid mt-11 "
               type="text"
-              placeholder="Shorten your URL"
-              onChange={handleShortUrl} required
+              placeholder="Customise given Short URL(Optional)"
+              onChange={handleShortUrl}  
             />
-            <div className="flex">
-              <button type="submit" value={btnText}  className="flex bg-yellow-500 text-white px-28 py-4 rounded-md hover:bg-gradient-to-r from-yellow-800 via-yellow-600 to-yellow-400 active:ring-2">
+          </div>
+          <div className="ml-96 pl-24 mt-11">
+              <button type="submit" value={btnText}  className=" bg-yellow-500 text-white font-bold text-2xl px-28 py-4 rounded-md hover:bg-gradient-to-r from-yellow-800 via-yellow-600 to-yellow-400 active:ring-2">
                 Shorten
               </button>
+              </div>
+              <div className="ml-96 pl-8 mt-11">
+            {surl ? <p className="mr-auto row-span-1 col-span-full font-bold mt-11 text-xl">{"The Short URL is "}<a className="text-blue-600 underline cursor-pointer" href={`${surl}${shortUrl}`}>{`${surl}${shortUrl}`}</a></p> : null}
             </div>
-            {surl ? <p className="mr-auto row-span-1 col-span-full text-sm font-bold">{"The Short URL is "}<a className="text-blue-600 underline cursor-pointer" href={`${surl}${shortUrl}`}>{`${surl}${shortUrl}`}</a></p> : null}
-          </form>
-          <div className=" gap-2 flex pl-28 mt-1">
-            <div className="flex text-gray-400">
-              
-            </div>
-            <div
-              id="termslink"
-              className="flex hover:text-indigo-600 hover:underline text-gray-400"
-            >
-              <Link href="https://github.com/Saikat-Chattoraj/tallyurl/">
-                <a> Github Link </a>
-              </Link>
-            </div>
-            <div className="flex text-gray-400"></div>
-            <div
-              id="privacylink"
-              className="flex hover:text-indigo-600 hover:underline text-gray-400"
-            >
-              <Link href="/">
-                <a> </a>
-              </Link>
-            </div>
-          </div>
+            <div className="ml-96 pl-32 mt-11">
+            <CopyToClipboard text={surl+""+shortUrl}
+          onCopy={() => setCopy("true")}>
+          <button type="button" className="bg-yellow-400 py-3 px-4 rounded-md active:bg-green-700 ml-10 text-md text-white ">Copy to clipboard</button>
+        </CopyToClipboard>
         </div>
-      </div>
+        
+          </form>
     </div>
-  );
+  )   
 }
+
+export default ShortenUrl
