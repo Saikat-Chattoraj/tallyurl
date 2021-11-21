@@ -69,7 +69,7 @@ const ShortenUrl = ({btnText}) => {
               </button>
               </div>
               <div className="ml-96 pl-8 mt-11">
-            {surl ? <p className="mr-auto row-span-1 col-span-full font-bold mt-11 text-xl">{"The Short URL is "}<a className="text-blue-600 underline cursor-pointer" href={`${surl}${shortUrl}`}>{`${surl}${shortUrl}`}</a></p> : null}
+           {surl && longUrl ? <p className="mr-auto row-span-1 col-span-full font-bold mt-11 text-xl">{"The Short URL is "}<a className="text-blue-600 underline cursor-pointer" href={`${surl}${shortUrl}`}>{`${surl}${shortUrl}`}</a></p> : null}
             </div>
             <div className="ml-96 pl-32 mt-11">
             <CopyToClipboard text={surl+""+shortUrl}
